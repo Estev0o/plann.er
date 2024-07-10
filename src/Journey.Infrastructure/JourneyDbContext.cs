@@ -11,5 +11,12 @@ namespace Journey.Infrastructure
         {
             optionsBuilder.UseSqlite("Data Source=C:\\Users\\vinip\\Music\\Journey\\JourneyDatabase.db");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Activity>().ToTable("Activities");
+        }
     }
 }
