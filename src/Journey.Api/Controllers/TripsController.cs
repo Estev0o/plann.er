@@ -1,4 +1,5 @@
-﻿using Journey.Application.UseCases.Trips.GetAll;
+﻿using Journey.Application.UseCases.Trips.Delete;
+using Journey.Application.UseCases.Trips.GetAll;
 using Journey.Application.UseCases.Trips.GetById;
 using Journey.Application.UseCases.Trips.Register;
 using Journey.Communication.Requests;
@@ -53,11 +54,24 @@ namespace Journey.Api.Controllers
         [ProducesResponseType(typeof(ResponseTripJson), StatusCodes.Status404NotFound)]
         public IActionResult GetById([FromRoute]Guid id) 
         {
-            var useCaase = new GetTripByIdUseCase();
+            var useCase = new GetTripByIdUseCase();
 
-            var response = useCaase.Execute(id);
+            var response = useCase.Execute(id);
 
             return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseTripJson), StatusCodes.Status404NotFound)]
+        public IActionResult Delete([FromRoute] Guid id)
+        {
+            var useCase = new DeleteTripByIdUseCase();
+
+            useCase.Execute(id);
+
+            return NoContent();
         }
     }
 }
